@@ -8,7 +8,7 @@ int main();
 int countWords(char* input);
 
 //letter counter
-int []countLetters(char *input, int len);
+int *countLetters(char *input, int len);
 
 //creates the tokenizer vector
 char **createVector(char **vector, int len, char *input);

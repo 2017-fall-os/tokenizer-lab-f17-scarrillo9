@@ -1,5 +1,6 @@
 #include <stdio.h>  //for puts
 #include <stdlib.h> //for exit
+#include <string.h>
 #include <errno.h>  //for perror
 //for open()
 #include <sys/types.h>
@@ -14,7 +15,7 @@
 int main(){
 	printf("Input the string:\n");
 	char userInput[50];
-	fgets(userInput, 50, stdin);
+	read(0, userInput, 50);
 	int numOfWords = countWords(userInput);
 	
 	//debugging for amount of words
@@ -28,13 +29,14 @@ int main(){
 char **createVector(char **vector, int len, char *input){
 	vector = malloc(sizeof(char *)*len);
 	
-	mallocWords(input);
+	countLetters(input, len);
 	
-	int wordLengths[len] = countLetters(input, len);
-	int i;
-	for(i = 0; i < len; i++){
-		vector[i] = malloc(wordLengths[i]);
-	}//end for
+//	int *wordLengths = countLetters(input, len);
+//	int i;
+//	for(i = 0; i < len; i++){
+//		vector[i] = malloc(*(wordLengths + i));
+//		printf("vector:%d %d\n", i, strlen(vector[i]));
+//	}//end for
 	
 	return vector;
 }//end createVector
@@ -53,24 +55,30 @@ int countWords(char *input){
 	return numOfWords+1;
 }//end countWords
 
-int []countLetters(char *input, int len){
+int *countLetters(char *input, int len){
 	int i = 0;
 	int index = 0;
 	int words[len];
 	int numOfLetters = 0;
 	
-	while(word[i] != EOF){
-		if(word[i] != ' '){
+	printf("%c: %d\n", input[i], numOfLetters);
+	while(input[i] != EOF){
+		if(input[i] != ' '){
 			numOfLetters++;
 			i++;
 		}//end if for word
-		if(word[i] == ' '){
+		if(input[i] == ' '){
 			words[index] = numOfLetters;
 			numOfLetters = 0;
 			index++;
 			i++;
 		}//end if for blanks
+		printf("%c: %d\n", input[i], numOfLetters);
 	}//end while
+	
+	for(i = 0; i < len; i++){
+		printf("word %d: %d\n", i+1, words[i]);
+	}
 	
 	return words;
 }//end countLetters
