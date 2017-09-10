@@ -12,19 +12,17 @@
 
 #define BUFSIZE 1024
 
-int main(){
-	printf("Input the string:\n");
-	char userInput[50];
-	read(0, userInput, 50);
-	int numOfWords = countWords(userInput);
-	
-	//debugging for amount of words
-	printf("%d\n", numOfWords);
-	
-	char **vector;
-	createVector(vector, numOfWords, userInput);
-	
-}//end main
+//char **mytoc(char *str, char delim){
+//	
+//}
+
+void copyPhrase(int len, char *input, char *phrase){
+	int i;
+	for(i = 0; i < len; i++){
+		phrase[i] = input[i];
+	}
+	phrase[i] = '\0';
+}//end copyPhrase
 
 char **createVector(char **vector, int len, char *input){
 	vector = malloc(sizeof(char *)*len);
@@ -46,7 +44,7 @@ int countWords(char *input){
 	//int len = strlen(input);
 	int numOfWords = 0;
 	
-	while(input[i] != EOF){
+	while(input[i] != '\0'){
 		if(input[i] == ' ')
 			numOfWords++;
 		i++;
@@ -61,8 +59,8 @@ int *countLetters(char *input, int len){
 	int words[len];
 	int numOfLetters = 0;
 	
-	printf("%c: %d\n", input[i], numOfLetters);
-	while(input[i] != EOF){
+	while(input[i] != '\0'){
+		//printf("%c: %d\n", input[i], numOfLetters);	//debugging
 		if(input[i] != ' '){
 			numOfLetters++;
 			i++;
@@ -73,12 +71,12 @@ int *countLetters(char *input, int len){
 			index++;
 			i++;
 		}//end if for blanks
-		printf("%c: %d\n", input[i], numOfLetters);
 	}//end while
+	words[index] = numOfLetters;
 	
-	for(i = 0; i < len; i++){
-		printf("word %d: %d\n", i+1, words[i]);
-	}
+//	for(i = 0; i < len; i++){
+//		printf("word %d: %d\n", i+1, words[i]);
+//	}	//debugging
 	
 	return words;
 }//end countLetters

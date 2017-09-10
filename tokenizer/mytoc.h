@@ -4,6 +4,10 @@
 //demo method
 int main();
 
+void readInput();
+
+void counting(char *phrase, int length);
+
 //word counter
 int countWords(char* input);
 
@@ -12,5 +16,7 @@ int *countLetters(char *input, int len);
 
 //creates the tokenizer vector
 char **createVector(char **vector, int len, char *input);
+
+void copyPhrase(int len, char *input, char *phrase);
 
 #endif
