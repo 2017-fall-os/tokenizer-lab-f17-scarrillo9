@@ -18,4 +18,6 @@ void printVector(char **vector);
 
 void freeVector(char **vector);
 
+void readInput();
+
 #endif

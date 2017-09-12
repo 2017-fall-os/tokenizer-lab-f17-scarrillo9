@@ -1,5 +1,5 @@
-#include <stdio.h>  //for puts
-#include <stdlib.h> //for exit
+#include <stdio.h>  
+#include <stdlib.h> 
 
 #include "mytoc.h" 
 
