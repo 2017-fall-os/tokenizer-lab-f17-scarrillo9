@@ -4,19 +4,14 @@
 //demo method
 int main();
 
-void readInput();
+char **myToc(char *str, char delim);
 
-void counting(char *phrase, int length);
+char *copyWord(char *str, int length);
 
-//word counter
-int countWords(char* input);
+int countLetters(char *str, char delim);
 
-//letter counter
-int *countLetters(char *input, int len);
+char *startWord(char *str, char delim);
 
-//creates the tokenizer vector
-char **createVector(char **vector, int len, char *input);
-
-void copyPhrase(int len, char *input, char *phrase);
+int countWords(char *str, char delim);
 
 #endif
