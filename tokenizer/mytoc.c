@@ -1,47 +1,83 @@
 #include <stdio.h>  //for puts
 #include <stdlib.h> //for exit
-#include <errno.h>  //for perror
 
 #include "mytoc.h" 
 
+#define ff fflush(stdout);
+
+int numOfWords = 0;
 
 char **myToc(char *str, char delim){
-	printf("inside myToc\n");
-	int numOfWords = countWords(str, delim);
+	printf("inside myToc\n"); ff;
+	numOfWords = countWords(str, delim);
 	
+	//creating pointer array
 	char **vector = (char **)calloc(numOfWords+1, sizeof(char *));
-	vector[numOfWords] = NULL;
+	vector[numOfWords] = NULL;	//creating null value at end of array
 	char *currString = str;
 	
 	int i;
 	for(i = 0; i < numOfWords; i++){
-		int wordLength = countLetters(currString, delim);
-		char *currWord = startWord(currString, delim);
+		int wordLength = countLetters(currString, delim);	//gets length of first word
 		
-		vector[i] = (char *)malloc(wordLength+1);
-		vector[wordLength] = NULL;
-		vector[i] = copyWord(currWord, wordLength);
+		vector[i] = (char *)malloc(wordLength+1);	//allocates the memory needed
+		vector[wordLength] = NULL;	//creates null value to end array
+		vector[i] = copyWord(currString, wordLength, delim);	//copy the word in the nextor space allocated
 		
-		printf("currString: %s\n currWord: %s\n", currString, currWord);
+		char *currWord = startWord(currString, delim);	//gets the new string without the word just allocated
+		
+		//printf("currString: %s\n currWord: %s\n", currString, currWord); ff;
 		currString = currWord;
 	}//end for loop
-	
+	printVector(vector);
 	return vector;
 }//end myToc
 
-char *copyWord(char *str, int length){
-	printf("inside copyWord\n");
+//frees vector
+void freeVector(char **vector){
+	int i;
+	for(i = 0; i < numOfWords; i++){
+		free(vector[i]);
+	}//end for loop
+	free(vector);
+}//end freeVector
+
+//prints vector created
+void printVector(char **vector){
+	int i;
+	for(i = 0; i < numOfWords; i++){
+		char *currVec = vector[i];
+		printf("\nWord #%d: ", i+1); ff;
+		while(*currVec != '\0'){
+			printf("%c", *currVec); ff;
+			currVec++;
+		}//end while
+	}//end for loop
+	printf("\n"); ff;
+}//end printVector
+
+//copies the word into the allocated memory
+char *copyWord(char *str, int length, char delim){
+	//printf("inside copyWord\n"); ff;
 	char *currArray = (char *)malloc(length+1);
 	currArray[length] = '\0';
 	
 	int i;
+	int j = 0;
 	for(i = 0; i < length; i++){
-		currArray[i] = str[i];
+		if(str[j] == delim){
+			j++; i--;
+		}
+		else{
+			currArray[i] = str[j];
+			j++;
+		}
 	}//end for loop
 	
 	return currArray;
 }//end copyWord
 
+//counts the letters in a word
 int countLetters(char *str, char delim){
 	int count = 0;
 	
@@ -58,12 +94,13 @@ int countLetters(char *str, char delim){
 		}//end if counting word
 	}//end while
 	
-	printf("inside countLetters %d\n", count);
+	//printf("inside countLetters %d\n", count); ff;
 	return count;
 }//end countLetters
 
+//cuts the first word of the string off
 char *startWord(char *str, char delim){
-	printf("inside startWord\n");
+	//printf("inside startWord\n"); ff;
 	char *newstr = str;
 	int onWord = 0;
 	
@@ -83,6 +120,7 @@ char *startWord(char *str, char delim){
 	return newstr;
 }//end wordLength
 
+//counts the amount of words in a string
 int countWords(char *str, char delim){
 	int i = 0; 
 	int numOfWords = 0;
@@ -99,7 +137,7 @@ int countWords(char *str, char delim){
 			space = 0;
 		i++;
 	}//end while
-	printf("inside countWords %d\n", numOfWords);
+	//printf("inside countWords %d\n", numOfWords); ff;
 	
 	return numOfWords;
 }//end countWords
